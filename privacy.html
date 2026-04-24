@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidade — TruckScan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --dark: #111214;
+      --card: #181a1e;
+      --border: #2a2d33;
+      --orange: #f97316;
+      --white: #f4f4f4;
+      --muted: #8a8f9a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .nav-logo span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+    .nav-logo span em { color: var(--orange); font-style: normal; }
+    nav a.back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    nav a.back:hover { color: var(--orange); }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 5%;
+    }
+
+    .page-header {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--orange);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .page-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 14px;
+      padding-left: 14px;
+      border-left: 3px solid var(--orange);
+    }
+
+    .section p, .section li {
+      color: var(--muted);
+      font-size: 0.93rem;
+      margin-bottom: 10px;
+    }
+
+    .section ul {
+      padding-left: 20px;
+    }
+
+    .section ul li { margin-bottom: 8px; }
+
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-top: 60px;
+    }
+
+    .contact-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .contact-box p { color: var(--muted); font-size: 0.9rem; }
+    .contact-box a { color: var(--orange); text-decoration: none; }
+
+    footer {
+      padding: 32px 5%;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    footer p { color: var(--muted); font-size: 0.82rem; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--orange); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="TruckScan" onerror="this.style.display='none'" />
+      <span>Truck<em>Scan</em></span>
+    </a>
+    <a href="index.html" class="back">← Voltar ao início</a>
+  </nav>
+
+  <div class="container">
+
+    <div class="page-header">
+      <span>Legal</span>
+      <h1>Política de Privacidade</h1>
+      <p>Última atualização: 24 de abril de 2026 &nbsp;|&nbsp; Aplicável ao aplicativo TruckScan para Android</p>
+    </div>
+
+    <div class="section">
+      <h2>1. Introdução</h2>
+      <p>A TruckScan ("nós", "nosso" ou "aplicativo") está comprometida com a proteção da sua privacidade. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais ao utilizar o aplicativo TruckScan.</p>
+      <p>Ao usar o TruckScan, você concorda com as práticas descritas nesta política. Se não concordar, por favor, não utilize o aplicativo.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Dados que coletamos</h2>
+      <p>Coletamos os seguintes tipos de dados:</p>
+      <ul>
+        <li><strong>Dados de cadastro:</strong> nome completo, endereço de e-mail, telefone e endereço.</li>
+        <li><strong>Dados dos veículos:</strong> fabricante, modelo, ano, placa e família do caminhão cadastrado.</li>
+        <li><strong>Dados de localização:</strong> localização aproximada do dispositivo, usada exclusivamente para encontrar oficinas próximas. A coleta de localização só ocorre quando você utiliza a funcionalidade de busca de oficinas.</li>
+        <li><strong>Dados de uso:</strong> códigos de falha consultados e diagnósticos gerados, de forma anônima, para melhoria do banco de dados.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. Como usamos seus dados</h2>
+      <ul>
+        <li>Criar e gerenciar sua conta no aplicativo.</li>
+        <li>Fornecer diagnósticos de falhas com base nos dados do seu veículo.</li>
+        <li>Encontrar oficinas próximas à sua localização atual.</li>
+        <li>Melhorar continuamente o banco de dados de falhas e a precisão dos diagnósticos.</li>
+        <li>Enviar comunicações relacionadas ao serviço, quando necessário.</li>
+      </ul>
+      <p>Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins comerciais.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. Localização</h2>
+      <p>O TruckScan solicita acesso à sua localização apenas quando você utiliza a funcionalidade "Pesquisar oficinas próximas". A localização é usada exclusivamente para calcular a distância entre você e as oficinas cadastradas.</p>
+      <p>Você pode negar a permissão de localização a qualquer momento nas configurações do seu dispositivo. Nesse caso, a busca por oficinas próximas ficará indisponível, mas todas as demais funcionalidades continuarão funcionando normalmente.</p>
+    </div>
+
+    <div class="section">
+      <h2>5. Armazenamento e segurança</h2>
+      <p>Seus dados são armazenados de forma segura na plataforma Supabase, com criptografia em trânsito (HTTPS/TLS) e em repouso. Adotamos medidas técnicas e organizacionais adequadas para proteger suas informações contra acesso não autorizado, alteração, divulgação ou destruição.</p>
+      <p>O acesso aos seus dados é restrito aos sistemas necessários para o funcionamento do aplicativo e não é compartilhado com funcionários ou terceiros sem necessidade operacional.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Inteligência Artificial</h2>
+      <p>O TruckScan utiliza inteligência artificial (OpenAI GPT) para auxiliar no diagnóstico de falhas quando o código não está em nossa base de dados. As consultas enviadas à IA incluem apenas informações técnicas do veículo (fabricante, família, código de falha e sintomas descritos) e não incluem dados pessoais identificáveis.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Retenção de dados</h2>
+      <p>Mantemos seus dados enquanto sua conta estiver ativa. Você pode solicitar a exclusão da sua conta e de todos os dados associados a qualquer momento pelo e-mail de contato abaixo. Após a solicitação, os dados serão excluídos em até 30 dias.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Seus direitos (LGPD)</h2>
+      <p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você tem direito a:</p>
+      <ul>
+        <li>Confirmar a existência de tratamento dos seus dados.</li>
+        <li>Acessar seus dados pessoais.</li>
+        <li>Corrigir dados incompletos, inexatos ou desatualizados.</li>
+        <li>Solicitar a exclusão dos seus dados.</li>
+        <li>Revogar o consentimento para uso dos dados a qualquer momento.</li>
+        <li>Portabilidade dos dados para outro fornecedor de serviço.</li>
+      </ul>
+      <p>Para exercer qualquer um desses direitos, entre em contato pelo e-mail abaixo.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Cookies e rastreamento</h2>
+      <p>O aplicativo TruckScan não utiliza cookies de rastreamento publicitário. As únicas informações armazenadas localmente no dispositivo são os dados de sessão necessários para manter o login ativo.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Alterações nesta política</h2>
+      <p>Podemos atualizar esta Política de Privacidade periodicamente. Quando houver alterações relevantes, notificaremos os usuários pelo aplicativo. O uso continuado do TruckScan após as alterações implica aceitação da nova política.</p>
+    </div>
+
+    <div class="contact-box">
+      <h3>📬 Dúvidas ou solicitações?</h3>
+      <p>Entre em contato com nosso responsável pela proteção de dados:</p>
+      <p style="margin-top: 10px;">
+        <strong style="color: var(--white);">TruckScan</strong><br />
+        E-mail: <a href="mailto:contato@scantruckapp.com">contato@scantruckapp.com</a><br />
+        Site: <a href="https://scantruckapp.com">scantruckapp.com</a>
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 TruckScan &nbsp;|&nbsp; <a href="index.html">Voltar ao início</a></p>
+  </footer>
+
+</body>
+</html>

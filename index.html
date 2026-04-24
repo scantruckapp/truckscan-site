@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruckScan — Diagnóstico Inteligente de Caminhões</title>
+  <meta name="description" content="TruckScan: diagnóstico inteligente de falhas para caminhões Scania, Volvo, Mercedes, MAN, Volkswagen, DAF e Iveco. Gratuito na Play Store." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --dark: #111214;
+      --card: #181a1e;
+      --border: #2a2d33;
+      --orange: #f97316;
+      --orange-dim: #c25a0e;
+      --white: #f4f4f4;
+      --muted: #8a8f9a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .nav-logo span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .nav-logo span em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    nav a.btn-nav {
+      background: var(--orange);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    nav a.btn-nav:hover { background: var(--orange-dim); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(249,115,22,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(249,115,22,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(249,115,22,0.12);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: var(--orange);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 span { color: var(--orange); }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--orange-dim); transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--orange); transform: translateY(-2px); }
+
+    /* ── MARCAS ── */
+    .brands {
+      padding: 60px 5%;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .brands p {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .brands-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .brand-tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .brand-tag:hover { border-color: var(--orange); color: var(--white); }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 100px 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--orange);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin-bottom: 60px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(249,115,22,0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 100px 5%;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .how-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: rgba(249,115,22,0.2);
+      line-height: 1;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    /* ── OFICINAS ── */
+    .oficinas {
+      padding: 100px 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .oficinas-text h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .oficinas-text h2 span { color: var(--orange); }
+
+    .oficinas-text p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+
+    .oficinas-text a {
+      color: var(--orange);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .oficinas-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+    }
+
+    .oficinas-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .benefit-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(249,115,22,0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .benefit p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    .benefit strong { color: var(--white); display: block; margin-bottom: 2px; }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 100px 5%;
+      text-align: center;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      margin-bottom: 16px;
+    }
+
+    .cta-section h2 span { color: var(--orange); }
+
+    .cta-section p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 5%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    footer p {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--orange); }
+
+    .footer-links { display: flex; gap: 24px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .oficinas {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="logo.png" alt="TruckScan Logo" onerror="this.style.display='none'" />
+      <span>Truck<em>Scan</em></span>
+    </a>
+    <a href="#download" class="btn-nav">Baixar grátis</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🚛 Diagnóstico inteligente</div>
+    <h1>Seu caminhão<br /><span>falou.</span><br />Você entendeu?</h1>
+    <p>TruckScan transforma códigos de falha em diagnósticos claros, com recomendações práticas para motoristas e gestores de frota.</p>
+    <div class="hero-cta">
+      <a href="#download" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M8 12l4 4 4-4M12 8v8"/></svg>
+        Baixar na Play Store
+      </a>
+      <a href="privacy.html" class="btn-secondary">Política de privacidade</a>
+    </div>
+  </section>
+
+  <!-- BRANDS -->
+  <section class="brands">
+    <p>Compatível com os principais fabricantes</p>
+    <div class="brands-grid">
+      <div class="brand-tag">Scania</div>
+      <div class="brand-tag">Volvo</div>
+      <div class="brand-tag">Mercedes-Benz</div>
+      <div class="brand-tag">MAN</div>
+      <div class="brand-tag">Volkswagen</div>
+      <div class="brand-tag">DAF</div>
+      <div class="brand-tag">Iveco</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="section-label">Funcionalidades</p>
+    <h2 class="section-title">Tudo que você precisa<br />na palma da mão</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Diagnóstico por código</h3>
+        <p>Digite o código de falha do painel e receba uma explicação clara sobre o problema, nível de risco e o que fazer.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Diagnóstico por sintomas</h3>
+        <p>Descreva o que está acontecendo com o caminhão e a IA identifica as possíveis causas e recomendações.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>IA especializada</h3>
+        <p>Inteligência artificial treinada com base de dados real de falhas, aprende continuamente com novos diagnósticos.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3>Oficinas próximas</h3>
+        <p>Encontre oficinas especializadas perto de você com navegação direta pelo Google Maps ou Waze.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚛</div>
+        <h3>Multi-fabricante</h3>
+        <p>Suporte para Scania, Volvo, Mercedes, MAN, Volkswagen, DAF e Iveco com banco de dados específico para cada família.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>100% gratuito</h3>
+        <p>Download gratuito na Play Store. Cadastre seu caminhão e comece a usar imediatamente, sem mensalidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="how-inner">
+      <p class="section-label">Como funciona</p>
+      <h2 class="section-title">Simples assim</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Cadastre seu caminhão</h3>
+          <p>Informe fabricante, modelo, ano e família. O app já sabe quais falhas são compatíveis.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Informe o código ou sintoma</h3>
+          <p>Digite o código que apareceu no painel ou descreva o que está acontecendo.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Receba o diagnóstico</h3>
+          <p>Em segundos você sabe o que é, o nível de risco e o que fazer. Pode rodar ou não?</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>Encontre uma oficina</h3>
+          <p>Se precisar de ajuda, encontre a oficina mais próxima com um toque.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFICINAS -->
+  <section style="padding: 100px 5%;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; align-items: center;">
+      <div>
+        <p class="section-label">Para oficinas</p>
+        <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1; margin-bottom: 20px;">
+          Sua oficina no <span style="color: var(--orange);">radar</span> dos motoristas
+        </h2>
+        <p style="color: var(--muted); margin-bottom: 16px;">Anuncie sua oficina no TruckScan e apareça para motoristas que estão com problemas na sua região, no momento exato que precisam de ajuda.</p>
+        <p style="color: var(--muted); margin-bottom: 24px;">Planos de visibilidade para oficinas especializadas em caminhões pesados.</p>
+        <a href="mailto:contato@scantruckapp.com" style="color: var(--orange); font-weight: 600; text-decoration: none;">
+          Entrar em contato →
+        </a>
+      </div>
+      <div class="oficinas-card">
+        <h3>Por que anunciar?</h3>
+        <div class="benefit">
+          <div class="benefit-icon">📍</div>
+          <div>
+            <strong>Visibilidade por localização</strong>
+            <p>Apareça para motoristas próximos à sua oficina no momento do diagnóstico.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🎯</div>
+          <div>
+            <strong>Público qualificado</strong>
+            <p>Motoristas que já sabem o problema e estão buscando solução.</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">💬</div>
+          <div>
+            <strong>Contato direto via WhatsApp</strong>
+            <p>O motorista fala diretamente com sua oficina pelo app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="download">
+    <h2>Baixe agora.<br /><span>É gratuito.</span></h2>
+    <p>Disponível para Android. Cadastre seu caminhão e tenha diagnósticos precisos sempre que precisar.</p>
+    <a href="https://play.google.com/store/apps/details?id=com.truckscan.app" class="btn-primary" style="display: inline-flex;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M8 12l4 4 4-4M12 8v8"/></svg>
+      Baixar na Play Store — Grátis
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 TruckScan. Todos os direitos reservados.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Política de Privacidade</a>
+      <a href="mailto:contato@scantruckapp.com">Contato</a>
+    </div>
+  </footer>
+
+</body>
+</html>
