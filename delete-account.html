@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excluir Conta — TruckScan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --dark: #111214;
+      --card: #181a1e;
+      --border: #2a2d33;
+      --orange: #f97316;
+      --white: #f4f4f4;
+      --muted: #8a8f9a;
+      --red: #ef4444;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .nav-logo span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+    .nav-logo span em { color: var(--orange); font-style: normal; }
+    nav a.back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    nav a.back:hover { color: var(--orange); }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 5%;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--red);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .page-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .warning-box {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+    }
+
+    .warning-box h3 {
+      color: var(--red);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .warning-box ul {
+      padding-left: 18px;
+    }
+
+    .warning-box li {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    label span {
+      color: var(--red);
+      margin-left: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--orange);
+    }
+
+    select option {
+      background: var(--card);
+      color: var(--white);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 28px;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      margin-top: 2px;
+      accent-color: var(--red);
+      cursor: pointer;
+    }
+
+    .checkbox-group p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .btn-delete {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-delete:hover { background: #dc2626; transform: translateY(-1px); }
+    .btn-delete:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+
+    .success-box {
+      display: none;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .success-box h3 {
+      color: #22c55e;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .success-box p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .info-section {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .info-section h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      padding-left: 14px;
+      border-left: 3px solid var(--orange);
+    }
+
+    .info-section p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      padding: 32px 5%;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      margin-top: 60px;
+    }
+    footer p { color: var(--muted); font-size: 0.82rem; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--orange); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="TruckScan" onerror="this.style.display='none'" />
+      <span>Truck<em>Scan</em></span>
+    </a>
+    <a href="index.html" class="back">← Voltar ao início</a>
+  </nav>
+
+  <div class="container">
+
+    <div class="page-header">
+      <span>⚠️ Ação irreversível</span>
+      <h1>Excluir minha conta</h1>
+      <p>Preencha o formulário abaixo para solicitar a exclusão da sua conta e de todos os seus dados do TruckScan. Você receberá uma confirmação por e-mail em até 48 horas.</p>
+    </div>
+
+    <div class="warning-box">
+      <h3>⚠️ O que será excluído permanentemente:</h3>
+      <ul>
+        <li>Sua conta e dados de perfil (nome, e-mail, telefone)</li>
+        <li>Todos os caminhões cadastrados</li>
+        <li>Histórico de diagnósticos</li>
+        <li>Dados de localização armazenados</li>
+      </ul>
+    </div>
+
+    <form id="deleteForm">
+      <div class="form-group">
+        <label>E-mail da conta <span>*</span></label>
+        <input type="email" id="email" placeholder="seu@email.com" required />
+      </div>
+
+      <div class="form-group">
+        <label>Nome completo <span>*</span></label>
+        <input type="text" id="nome" placeholder="Seu nome completo" required />
+      </div>
+
+      <div class="form-group">
+        <label>Motivo da exclusão</label>
+        <select id="motivo">
+          <option value="">Selecione um motivo (opcional)</option>
+          <option value="nao_uso_mais">Não uso mais o aplicativo</option>
+          <option value="privacidade">Preocupações com privacidade</option>
+          <option value="problemas_tecnico">Problemas técnicos</option>
+          <option value="outro_app">Vou usar outro aplicativo</option>
+          <option value="outro">Outro motivo</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Observações adicionais</label>
+        <textarea id="observacoes" placeholder="Descreva aqui se tiver alguma informação adicional..."></textarea>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="confirmacao" onchange="toggleBtn()" />
+        <p>Entendo que essa ação é <strong style="color: var(--white);">permanente e irreversível</strong>. Todos os meus dados serão excluídos e não poderão ser recuperados.</p>
+      </div>
+
+      <button type="submit" class="btn-delete" id="btnDelete" disabled>
+        Solicitar exclusão da conta
+      </button>
+    </form>
+
+    <div class="success-box" id="successBox">
+      <h3>✅ Solicitação enviada com sucesso!</h3>
+      <p>Recebemos sua solicitação de exclusão de conta. Você receberá uma confirmação no e-mail informado em até <strong style="color: var(--white);">48 horas úteis</strong>. Após a confirmação, seus dados serão excluídos em até 30 dias.</p>
+    </div>
+
+    <div class="info-section">
+      <h2>Prazo de exclusão</h2>
+      <p>Após o recebimento da solicitação, seus dados serão excluídos em até <strong style="color: var(--white);">30 dias</strong>, conforme previsto na Lei Geral de Proteção de Dados (LGPD).</p>
+      <p>Alguns dados podem ser retidos por prazo maior caso exigido por lei ou para cumprimento de obrigações legais.</p>
+
+      <h2 style="margin-top: 28px;">Prefere entrar em contato?</h2>
+      <p>Se preferir, envie um e-mail diretamente para <strong style="color: var(--white);">contato@scantruckapp.com</strong> com o assunto "Exclusão de conta" e seu e-mail cadastrado.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 TruckScan &nbsp;|&nbsp; <a href="privacy.html">Política de Privacidade</a> &nbsp;|&nbsp; <a href="index.html">Início</a></p>
+  </footer>
+
+  <script>
+    function toggleBtn() {
+      const check = document.getElementById('confirmacao');
+      const btn = document.getElementById('btnDelete');
+      btn.disabled = !check.checked;
+    }
+
+    document.getElementById('deleteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const nome = document.getElementById('nome').value.trim();
+
+      if (!email || !nome) {
+        alert('Por favor, preencha e-mail e nome completo.');
+        return;
+      }
+
+      const btn = document.getElementById('btnDelete');
+      btn.disabled = true;
+      btn.textContent = 'Enviando solicitação...';
+
+      // Envia por mailto (abre cliente de e-mail) ou pode integrar com um serviço de formulário
+      const motivo = document.getElementById('motivo').value;
+      const obs = document.getElementById('observacoes').value;
+
+      const assunto = encodeURIComponent('Solicitação de Exclusão de Conta - TruckScan');
+      const corpo = encodeURIComponent(
+        `Solicitação de exclusão de conta\n\n` +
+        `Nome: ${nome}\n` +
+        `E-mail: ${email}\n` +
+        `Motivo: ${motivo || 'Não informado'}\n` +
+        `Observações: ${obs || 'Nenhuma'}\n\n` +
+        `Data da solicitação: ${new Date().toLocaleDateString('pt-BR')}`
+      );
+
+      window.location.href = `mailto:contato@scantruckapp.com?subject=${assunto}&body=${corpo}`;
+
+      setTimeout(() => {
+        document.getElementById('deleteForm').style.display = 'none';
+        document.getElementById('successBox').style.display = 'block';
+      }, 1500);
+    });
+  </script>
+
+</body>
+</html>
